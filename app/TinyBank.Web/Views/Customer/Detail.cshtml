@@ -1,0 +1,61 @@
+﻿@model TinyBank.Core.Model.Customer
+
+@{
+    ViewData["Title"] = "Customer Detail";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@Model.Firstname @Model.Lastname</h1>
+</div>
+
+<div>
+    <form>
+        <input class="js-customer-id" type="hidden" value="@Model.CustomerId" />
+        <div class="form-group">
+            <label>Vat number</label>
+            <input class="form-control js-vat-number" value="@Model.VatNumber">
+        </div>
+
+        <div class="form-group">
+            <label>First name</label>
+            <input class="form-control js-first-name" value="@Model.Firstname">
+        </div>
+
+        <div class="form-group">
+            <label>Last name</label>
+            <input class="form-control js-last-name" value="@Model.Lastname">
+        </div>
+
+        <div class="form-group">
+            <label>Registered</label>
+            <input class="form-control"
+                value="@Model.AuditInfo.Created.ToString("dd/MM/yyyy")">
+        </div>
+    </form>
+
+    <table class="table accounts-table">
+        <thead>
+            <tr>
+                <th scope="col">IBAN</th>
+                <th scope="col">Balance</th>
+                <th scope="col">Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var account in Model.Accounts) {
+                <tr>
+                    <td>@account.AccountId</td>
+                    <td>@account.Balance</td>
+                    <td>@account.AuditInfo.Created.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <button type="button" class="btn btn-primary js-update-customer">
+            Update
+        </button>
+    </div>
+</div>
+

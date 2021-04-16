@@ -1,0 +1,61 @@
+﻿@model SearchCustomersViewModel
+
+@{
+    ViewData["Title"] = "Customers list";
+}
+<div class="text-center">
+    <h1 class="display-4">Customers list</h1>
+</div>
+
+<div class="search-form">
+
+    <form action="/customer" method="get">
+        <div>
+            <label>Vat Number:</label>
+            <input class="form-control js-search-by-vatnumber"
+                   name="vatNumber"
+                   value="@Model.SearchOptions.VatNumber" />
+        </div>
+        <div>
+            <label>First Name:</label>
+            <input class="form-control js-search-by-firstname"
+                   name="firstName"
+                   value="@Model.SearchOptions.Firstname"/>
+        </div>
+        <div>
+            <label>Last Name:</label>
+            <input class="form-control js-search-by-lastname"
+                   name="lastName"
+                   value="@Model.SearchOptions.Lastname"/>
+        </div>
+        <button type="submit" class="btn btn-primary js-search-customer">
+            Search
+        </button>
+    </form>
+
+</div>
+
+<table class="table js-customers-list">
+    <thead>
+        <tr>
+            <th scope="col">Vat number</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model.Customers) {
+            <tr id="@customer.CustomerId">
+                <th>
+                    @Html.ActionLink(
+                        customer.VatNumber,
+                        "Detail", "Customer",
+                        new { id = customer.CustomerId }
+                   )
+                </th>
+                <td>@customer.Firstname</td>
+                <td>@customer.Lastname</td>
+            </tr>
+        }
+    </tbody>
+</table>
